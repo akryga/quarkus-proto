@@ -7,6 +7,8 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -27,7 +29,8 @@ public class User extends PanacheEntity {
     public String firstName;
     public String secondName;
     public String lastName;
-
-    @OneToMany(cascade = CascadeType.ALL)
+    // https://docs.jboss.org/hibernate/stable/annotations/reference/en/html/entity.html#entity-mapping-association
+    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
     public List<ProcessTemplate> ptpl = new ArrayList<ProcessTemplate>();
 }
